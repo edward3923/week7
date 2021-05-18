@@ -37,19 +37,30 @@ let firebase = require(`./firebase`)
 // /.netlify/functions/courses?courseNumber=KIEI-451
 exports.handler = async function(event) {
 
+
+
   // get the course number being requested
+  let courseNumber = event.queryStringParameters.courseNumber
+
 
   // establish a connection to firebase in memory
+  let db = firebase.firestore()
+
 
   // ask Firebase for the course that corresponds to the course number, wait for the response
+  let courseQuery = await db.collection(`course`).where(`courseNumber`, `==`, courseNumber).get()
+
 
   // get the first document from the query
+  let course = courseQuery.docs
 
   // get the id from the document
+  let courseId = course.id
 
-  // get the data from the document
+  // get the data from the document - stop here
 
   // create an object with the course data to hold the return value from our lambda
+  let returnValue = []
 
   // set a new Array as part of the return value
 
